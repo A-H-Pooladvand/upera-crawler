@@ -42,7 +42,7 @@ class Movie extends Command
                     $content = file_get_contents($url);
                     $extension = pathinfo($url, PATHINFO_EXTENSION);
 
-                    $path = "/home/amirhossein/Desktop/site/live/191632-main-2.4/Script/webflix_fa/public_html/uploads/$extension/{$movie['poster']}";
+                    $path = config('movie.path')."$extension/{$movie['poster']}";
 
 
                     File::put($path, $content);

@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'token' => env('UPERA_TOKEN')
+    'token' => env('UPERA_TOKEN'),
+    'path' => env('IMAGE_PATH'),
 ];
