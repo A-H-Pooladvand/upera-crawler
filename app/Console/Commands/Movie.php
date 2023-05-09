@@ -58,7 +58,7 @@ class Movie extends Command
 
                     $title = trim($movie['name']);
                     $slug = $this->slug($title);
-                    $poster = Poster::where('movie_id', $movie['id'])->first();
+                    $poster = Poster::where('slug', $slug)->first();
 
                     if (is_null($poster)) {
                         $poster = Poster::create([
