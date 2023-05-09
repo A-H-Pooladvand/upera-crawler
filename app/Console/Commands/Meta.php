@@ -29,7 +29,6 @@ class Meta extends Command
      */
     public function handle()
     {
-        PosterGenre::truncate();
         $genres = \App\Models\Genre::get();
 
         Poster::select(['id', 'movie_id'])->eachById(function (Poster $movie) use ($genres) {
