@@ -42,7 +42,7 @@ class Movie extends Command
                     $content = file_get_contents($url);
                     $extension = pathinfo($url, PATHINFO_EXTENSION);
 
-                    $path = config('movie.path')."$extension/{$movie['poster']}";
+                    $path = config('movie.path') . "$extension/{$movie['poster']}";
 
 
                     File::put($path, $content);
@@ -58,10 +58,11 @@ class Movie extends Command
 
                     $title = trim($movie['name']);
                     $slug = $this->slug($title);
-                    $poster = Poster::where('slug', $slug)->first();
+                    $poster = Poster::where('movie_id', $movie['id'])->first();
 
                     if (is_null($poster)) {
                         $poster = Poster::create([
+                            'movie_id'       => $movie['id'],
                             'cover_id'       => $media->id,
                             'posted_id'      => $media->id,
                             'title'          => $title,
@@ -80,7 +81,7 @@ class Movie extends Command
                             'enabled'        => '1',
                             'comment'        => '1',
                             'slug'           => $slug,
-                            //                        'label'          => '.',
+                            'label'          => $title,
                             //                        'sublabel'       => '.',
                         ]);
                     }

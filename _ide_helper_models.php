@@ -17,12 +17,14 @@ namespace App\Models{
  * @property int $id
  * @property string $title
  * @property int $position
+ * @property string $title_en
  * @method static \Illuminate\Database\Eloquent\Builder|Genre newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Genre newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Genre query()
  * @method static \Illuminate\Database\Eloquent\Builder|Genre whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Genre wherePosition($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Genre whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Genre whereTitleEn($value)
  */
 	class Genre extends \Eloquent {}
 }
@@ -80,6 +82,7 @@ namespace App\Models{
  * @property string $slug
  * @property string|null $label
  * @property string|null $sublabel
+ * @property string $movie_id
  * @method static \Illuminate\Database\Eloquent\Builder|Poster newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Poster newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Poster query()
@@ -95,6 +98,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Poster whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Poster whereImdb($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Poster whereLabel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Poster whereMovieId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Poster wherePlayas($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Poster wherePostedId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Poster whereRating($value)
@@ -116,56 +120,34 @@ namespace App\Models{
  * App\Models\Source
  *
  * @property int $id
- * @property int|null $cover_id
- * @property int|null $posted_id
- * @property int|null $trailer_id
- * @property string $title
- * @property string|null $duration
- * @property string|null $playas
- * @property string|null $downloadas
- * @property string $type
- * @property string|null $tags
- * @property float $rating
- * @property float|null $imdb
- * @property string|null $classification
- * @property int|null $year
- * @property string|null $description
- * @property int $downloads
- * @property int $shares
- * @property int $views
- * @property string $created
- * @property int $enabled
- * @property int $comment
- * @property string $slug
- * @property string|null $label
- * @property string|null $sublabel
+ * @property int|null $media_id
+ * @property int|null $poster_id
+ * @property int|null $episode_id
+ * @property int|null $channel_id
+ * @property string|null $type
+ * @property string|null $url
+ * @property string|null $quality
+ * @property string|null $title
+ * @property string|null $size
+ * @property string|null $kind
+ * @property int|null $external
+ * @property string|null $premium
  * @method static \Illuminate\Database\Eloquent\Builder|Source newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Source newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Source query()
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereClassification($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereComment($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereCoverId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereCreated($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereDownloadas($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereDownloads($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereDuration($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereEnabled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Source whereChannelId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Source whereEpisodeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Source whereExternal($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Source whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereImdb($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereLabel($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source wherePlayas($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source wherePostedId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereRating($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereShares($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereSublabel($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereTags($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Source whereKind($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Source whereMediaId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Source wherePosterId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Source wherePremium($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Source whereQuality($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Source whereSize($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Source whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereTrailerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Source whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereViews($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Source whereYear($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Source whereUrl($value)
  */
 	class Source extends \Eloquent {}
 }

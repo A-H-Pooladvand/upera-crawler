@@ -31,11 +31,15 @@ class Genre extends Command
         Http::get($url)
             ->collect('genres')
             ->each(function (array $genre, int $index) {
-                $title = $genre['fa'];
-                \App\Models\Genre::where('title', $title)->firstOrCreate([
-                    'title'    => $title,
+                $fa = $genre['fa'];
+                $en = $genre['en'];
+                \App\Models\Genre::where('title', $fa)->updateOrCreate([
+                    'title' => $fa,
+                ], [
+                    'title_en' => $en,
                     'position' => $index + 1
                 ]);
+
             });
     }
 }
