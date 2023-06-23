@@ -2,8 +2,9 @@
 
 namespace App\Console\Commands;
 
+use Str;
+use App\Services\Upera\Client;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
 
 class Genre extends Command
 {
@@ -24,22 +25,19 @@ class Genre extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(Client $client): void
     {
-        $url = 'https://web.upera.tv/api/v1/new_genres';
+        $client->genres('genres')->each(function (array $genre, int $index) {
+            $this->info(
+                sprintf("Genre command: attempting to insert the %s genre", Str::upper($genre['en']))
+            );
 
-        Http::get($url)
-            ->collect('genres')
-            ->each(function (array $genre, int $index) {
-                $fa = $genre['fa'];
-                $en = $genre['en'];
-                \App\Models\Genre::where('title', $fa)->updateOrCreate([
-                    'title' => $fa,
-                ], [
-                    'title_en' => $en,
-                    'position' => $index + 1
-                ]);
-
-            });
+            \App\Models\Genre::where('title', $genre['fa'])->updateOrCreate([
+                'title' => $genre['fa'],
+            ], [
+                'title_en' => $genre['en'],
+                'position' => $index + 1
+            ]);
+        });
     }
 }

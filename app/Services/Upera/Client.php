@@ -4,6 +4,7 @@ namespace App\Services\Upera;
 
 use Http;
 use Cache;
+use Closure;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Client\Response;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -14,7 +15,8 @@ class Client
         'movies'   => 'https://panel-api.upera.tv/api/v1/owner/get/movies',
         'series'   => 'https://panel-api.upera.tv/api/v1/owner/get/series',
         'packages' => 'https://panel-api.upera.tv/api/v1/owner/get/series',
-        'links'    => 'https://panel-api.upera.tv/api/v1/owner/show_links/'
+        'links'    => 'https://panel-api.upera.tv/api/v1/owner/show_links/',
+        'genres'   => 'https://web.upera.tv/api/v1/new_genres',
     ];
 
     private string $token;
@@ -29,14 +31,14 @@ class Client
     public function movies(int $page = 1): Response|PromiseInterface
     {
         $result = Http::withToken($this->token)
-            ->withHeaders($this->headers())
-            ->post(self::LINKS['movies'], [
-                'ir'             => -1,
-                'payment_method' => 0,
-                'sale_method'    => -1,
-                'page'           => $page,
-                'nodata'         => 1,
-            ]);
+        ->withHeaders($this->headers())
+        ->post(self::LINKS['movies'], [
+            'ir'             => -1,
+            'payment_method' => 0,
+            'sale_method'    => -1,
+            'page'           => $page,
+            'nodata'         => 1,
+        ]);
 
         $this->lastPage = $result->json('data.movies.last_page');
 
@@ -52,15 +54,13 @@ class Client
 
     public function moviesWithLinks(int $page = 1): Collection
     {
-//        return Cache::remember('movies_page_' . $page, now()->addHour(), function () use ($page) {
-            return $this->movies($page)
-                ->collect('data.movies.data')
-                ->map(function ($movie) {
-                    $movie['links'] = $this->links('movie/' . $movie['id'])->json('data.links');
+        return $this->movies($page)
+            ->collect('data.movies.data')
+            ->map(function ($movie) {
+                $movie['links'] = $this->links('movie/' . $movie['id'])->json('data.links');
 
-                    return $movie;
-                });
-//        });
+                return $movie;
+            });
     }
 
     public function headers(): array
@@ -82,5 +82,22 @@ class Client
     public function lastPage(): int
     {
         return $this->lastPage;
+    }
+
+    public function genres(string $key = null): Collection
+    {
+        return Http::get(self::LINKS['genres'])->collect($key);
+    }
+
+    public function allMoviesWithLinks(Closure $callback): void
+    {
+        $page = 1;
+
+        do {
+            $this
+                ->moviesWithLinks($page)
+                ->each($callback);
+            $page++;
+        } while ($this->lastPage() >= $page);
     }
 }
